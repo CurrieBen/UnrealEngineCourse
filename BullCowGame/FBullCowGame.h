@@ -1,20 +1,35 @@
 #pragma once
 #include <string>
 
-class FBullCowGame {
+using FString = std::string;
+using int32 = int;
+
+//this data type allows more than one integer to be stored inside it
+struct FBullCowCount
+{
+	int32 Bulls = 0;
+	int32 Cows = 0;
+};
+
+class FBullCowGame
+{
 public:
 	FBullCowGame(); //this is a constructor function - take the name of a class and define it as a function
-	int GetMaxTries() const;
-	int GetCurrentTry() const;
+	int32 GetMaxTries() const;
+	int32 GetCurrentTry() const;
 	bool IsGameWon() const;
 
 	void Reset(); //TODO make a more rich return value
-	bool CheckGuessValidity(std::string); //TODO make a more rich return value
+	bool CheckGuessValidity(FString); //TODO make a more rich return value
+
+	// checks bulls & cows and increases number, assuming it's a valid guess
+	FBullCowCount SubmitGuess(FString Guess);
 
 private:
 	// these values can be overwritten with the constructor function as these are complie time values
 	// and the constructor is a runtime value. So there is no point setting them at both. Instead we 
 	// will just set them at the constructor function so check there for values
-	int MyCurrentTry;
-	int MyMaxTries;
+	int32 MyCurrentTry;
+	int32 MyMaxTries;
+	FString MyHiddenWord;
 };
