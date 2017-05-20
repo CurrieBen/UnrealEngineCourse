@@ -1,5 +1,6 @@
 #include <iostream>
 #include <string>
+#include "FBullCowGame.h"
 
 // was using this: using namespace std; but it is too easy to be dangerous so removing from all file - also never user this in a header file!
 // using "using" can be dangerous as you can get namespace clashes, the best thing to do to avoid this is just use the name of the namespace then :: and then the method - for example std::std::cout
@@ -8,6 +9,7 @@ void PrintIntro();
 void PlayGame();
 std::string GetGuess();
 bool AskToPlayAgain();
+FBullCowGame BCGame; // instantiate a new game from the class FBullCowGame
 
 int main()
 {
@@ -34,8 +36,9 @@ void PrintIntro()
 
 void PlayGame()
 {
-	constexpr int MAX_TURNS = 5;
-	for (int count = 1; count <= MAX_TURNS; count++)
+	int MaxTries = BCGame.GetMaxTries();
+
+	for (int count = 1; count <= MaxTries; count++)
 	{
 		std::string Guess = GetGuess();
 		std::cout << "You guessed " << Guess << std::endl;
@@ -46,7 +49,9 @@ void PlayGame()
 std::string GetGuess() 
 {
 	//get a guess from the player
-	std::cout << "Enter your guess: ";
+	int CurrentTry = BCGame.GetCurrentTry();
+	std::cout << "Try " << CurrentTry << std::endl;
+	std::cout <<"Enter your guess: " << std::endl;
 	std::string Guess = "";
 	std::getline(std::cin, Guess);
 	std::cout << std::endl;
