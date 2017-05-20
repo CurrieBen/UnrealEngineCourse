@@ -50,3 +50,8 @@ string GetGuess()
 	cout << endl;
 	return Guess;
 }
+
+bool AskToPlayAgain()
+{
+
+}
