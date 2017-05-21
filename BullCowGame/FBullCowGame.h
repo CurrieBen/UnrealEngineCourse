@@ -32,13 +32,15 @@ public:
 
 	void Reset(); //TODO make a more rich return value
 	// checks bulls & cows and increases number, assuming it's a valid guess
-	FBullCowCount SubmitGuess(FString Guess);
+	FBullCowCount SubmitValidGuess(FString Guess);
 
 private:
-	// these values can be overwritten with the constructor function as these are complie time values
+	// these values can be overwritten with the constructor function as these are compile time values
 	// and the constructor is a runtime value. So there is no point setting them at both. Instead we 
 	// will just set them at the constructor function so check there for values
 	int32 MyCurrentTry;
 	int32 MyMaxTries;
 	FString MyHiddenWord;
+	bool bHasWon;
+	bool IsIsogram(FString) const;
 };
