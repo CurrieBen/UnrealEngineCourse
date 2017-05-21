@@ -7,6 +7,7 @@ using int32 = int;
 //these are the getter methods - we use const at the end so that they can't be changed
 int32 FBullCowGame::GetCurrentTry() const { return MyCurrentTry; }
 int32 FBullCowGame::GetMaxTries() const { return MyMaxTries; }
+int32 FBullCowGame::GetHiddenWordLength() const { return MyHiddenWord.length(); }
 
 FBullCowGame::FBullCowGame()
 {
@@ -31,9 +32,20 @@ bool FBullCowGame::IsGameWon() const
 	return false;
 }
 
-bool FBullCowGame::CheckGuessValidity(FString)
+EGuessStatus FBullCowGame::CheckGuessValidity(FString Guess) const
 {
-	return false;
+	if (false) { //not an isogram
+		return EGuessStatus::Not_an_isogram;
+	}
+	else if (false) { // not all lowercase
+		return EGuessStatus::Not_lowercase;
+	}
+	else if (Guess.length() != GetHiddenWordLength()) { // not the right amount of letters
+		return EGuessStatus::Wrong_length;
+	}
+	else {
+		return EGuessStatus::ok;
+	}
 }
 
 FBullCowCount FBullCowGame::SubmitGuess(FString Guess)
