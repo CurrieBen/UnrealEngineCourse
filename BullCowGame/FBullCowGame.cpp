@@ -1,16 +1,24 @@
+#pragma once
 #include "FBullCowGame.h"
 #include <map>
 #define TMap std::map
 
-//FString is used in unreal engine as well as FText and int32 rather than int
+//syntax made to be unreal friendly
 using FString = std::string;
 using int32 = int;
 
 //these are the getter methods - we use const at the end so that they can't be changed
 int32 FBullCowGame::GetCurrentTry() const { return MyCurrentTry; }
-int32 FBullCowGame::GetMaxTries() const { return MyMaxTries; }
 int32 FBullCowGame::GetHiddenWordLength() const { return MyHiddenWord.length(); }
 bool FBullCowGame::IsGameWon() const { return bHasWon; }
+
+int32 FBullCowGame::GetMaxTries() const 
+{
+	//changes the number of turns the player has based on the length of the isogram
+	//so for a 3 letter isogram, they have 4 turns etc.
+	TMap <int32, int32> WordLengthToMaxTries{ {3,4}, {4,5}, {5,6}, {6,7} };
+	return WordLengthToMaxTries[MyHiddenWord.length()];
+}
 
 FBullCowGame::FBullCowGame()
 {
@@ -19,10 +27,7 @@ FBullCowGame::FBullCowGame()
 
 void FBullCowGame::Reset()
 {
-	constexpr int32 MAX_TRIES = 8;
 	MyCurrentTry = 1;
-	MyMaxTries = MAX_TRIES;
-
 	const FString HIDDEN_WORD = "planet";
 	MyHiddenWord = HIDDEN_WORD;
 	bHasWon = false;
@@ -34,7 +39,7 @@ EGuessStatus FBullCowGame::CheckGuessValidity(FString Guess) const
 	if (!IsIsogram(Guess)) { //not an isogram
 		return EGuessStatus::Not_an_isogram;
 	}
-	else if (false) { // not all lowercase
+	else if (!IsLowerCase(Guess)) { // not all lowercase
 		return EGuessStatus::Not_lowercase;
 	}
 	else if (Guess.length() != GetHiddenWordLength()) { // not the right amount of letters
@@ -96,5 +101,17 @@ bool FBullCowGame::IsIsogram(FString Word) const
 	}
 
 	return true;
+}
+
+bool FBullCowGame::IsLowerCase(FString Word) const
+{
+	for (auto Letter : Word) {
+		if (!islower(Letter)) {
+			return false;
+		}
+		else {
+			return true;
+		}
+	}
 }
 

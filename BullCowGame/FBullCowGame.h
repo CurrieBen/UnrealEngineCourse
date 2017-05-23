@@ -1,6 +1,9 @@
+// The game logic (no view code or direct user interaction)
+
 #pragma once
 #include <string>
 
+// To make syntax unreal friendly
 using FString = std::string;
 using int32 = int;
 
@@ -28,9 +31,9 @@ public:
 	int32 GetCurrentTry() const;
 	bool IsGameWon() const;
 	int32 GetHiddenWordLength() const;
-	EGuessStatus CheckGuessValidity(FString) const; //TODO make a more rich return value
+	EGuessStatus CheckGuessValidity(FString) const;
 
-	void Reset(); //TODO make a more rich return value
+	void Reset();
 	// checks bulls & cows and increases number, assuming it's a valid guess
 	FBullCowCount SubmitValidGuess(FString Guess);
 
@@ -43,4 +46,5 @@ private:
 	FString MyHiddenWord;
 	bool bHasWon;
 	bool IsIsogram(FString) const;
+	bool IsLowerCase(FString) const;
 };
